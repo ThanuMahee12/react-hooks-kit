@@ -31,6 +31,9 @@ react-hooks-kit/
 | Hook | File | Wiki page |
 |------|------|-----------|
 | `usePagination` | `usePagination.js` | `wiki/usePagination.md` |
+| `useForm` | `useForm.js` | `wiki/useForm.md` |
+| `useModal` | `useModal.js` | `wiki/useModal.md` |
+| `useResponsive` | `useResponsive.js` | `wiki/useResponsive.md` |
 
 ## Documentation & the Wiki (IMPORTANT)
 

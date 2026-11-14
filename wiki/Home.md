@@ -20,6 +20,9 @@ Built on modern React primitives (`useReducer`, `useMemo`, `useCallback`, `useId
 | Hook | Purpose | Page |
 |------|---------|------|
 | `usePagination` | Client-side pagination with search/sort-friendly slicing, windowed page numbers, and concurrent-mode support | [[usePagination]] |
+| `useForm` | Controlled-form state with validation, async submit, and stale-read-safe handling | [[useForm]] |
+| `useModal` | Open/close state for modals with an optional data payload (add vs. edit) | [[useModal]] |
+| `useResponsive` | Viewport size + breakpoint helpers, plus `useMediaQuery` and `BREAKPOINTS` | [[useResponsive]] |
 
 > More hooks are added over time. Each gets its own reference page in the sidebar.
 

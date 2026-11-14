@@ -9,6 +9,9 @@ Built on modern React primitives (`useReducer`, `useMemo`, `useCallback`, `useId
 | Hook | Description |
 |------|-------------|
 | [`usePagination`](https://github.com/ThanuMahee12/react-hooks-kit/wiki/usePagination) | Client-side pagination with search/sort-friendly slicing, windowed page numbers, and concurrent-mode support |
+| [`useForm`](https://github.com/ThanuMahee12/react-hooks-kit/wiki/useForm) | Controlled-form state with validation, async submit, and stale-read-safe handling |
+| [`useModal`](https://github.com/ThanuMahee12/react-hooks-kit/wiki/useModal) | Open/close state for modals with an optional data payload (add vs. edit) |
+| [`useResponsive`](https://github.com/ThanuMahee12/react-hooks-kit/wiki/useResponsive) | Viewport size + breakpoint helpers, plus `useMediaQuery` and `BREAKPOINTS` |
 
 ## Install (submodule)
 

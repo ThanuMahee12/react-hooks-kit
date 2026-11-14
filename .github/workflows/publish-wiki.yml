@@ -1,0 +1,60 @@
+name: Publish Wiki
+
+# Keeps the GitHub Wiki in sync with the wiki/ folder in this repo.
+# The wiki/ folder is the single source of truth — do not edit the wiki
+# directly on github.com, those edits are overwritten on the next publish.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/**'
+      - '.github/workflows/publish-wiki.yml'
+  workflow_dispatch: {}
+
+# Only one publish at a time; newer pushes supersede in-flight runs.
+concurrency:
+  group: publish-wiki
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync wiki/ to the GitHub Wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          REPO="${{ github.repository }}"
+          WIKI_URL="https://x-access-token:${GH_TOKEN}@github.com/${REPO}.wiki.git"
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # The wiki repo always has at least one page, so a clone is safe.
+          git clone "$WIKI_URL" wiki-repo
+
+          # Replace all published pages with the current wiki/ contents,
+          # preserving the wiki repo's own .git directory.
+          find wiki-repo -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -R wiki/. wiki-repo/
+
+          cd wiki-repo
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Wiki already up to date — nothing to publish."
+            exit 0
+          fi
+
+          git commit -m "docs: sync wiki from ${GITHUB_SHA::7}"
+          # GitHub wikis use the 'master' branch.
+          git push origin HEAD:master
+          echo "Wiki published."

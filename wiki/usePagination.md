@@ -198,6 +198,57 @@ function DataTable({ rows }) {
 
 ---
 
+## Internal design
+
+### State machine (reducer)
+
+Page and page size are managed by a single reducer so transitions stay coherent. The current page is additionally **clamped at render time** against `totalPages`, so shrinking the list never leaves you on an empty page.
+
+```mermaid
+stateDiagram-v2
+  [*] --> Page1 : init(itemsPerPage)
+
+  Page1 --> PageN : SET_PAGE(n)
+  PageN --> PageN : SET_PAGE(n)
+  PageN --> Page1 : RESET
+  Page1 --> Page1 : RESET
+
+  PageN --> Resized : SET_PER_PAGE(size)
+  Page1 --> Resized : SET_PER_PAGE(size)
+  Resized --> Page1 : (always lands on page 1)
+
+  note right of PageN
+    render-time guard:
+    currentPage = clamp(page, 1, totalPages)
+  end note
+```
+
+### Page change — concurrent flow
+
+Navigation is wrapped in `useTransition`, so a page change is a non-urgent update: the UI can keep responding (and expose `isPending`) while React prepares the new slice.
+
+```mermaid
+sequenceDiagram
+  actor User
+  participant UI as Pagination UI
+  participant Hook as usePagination
+  participant R as reducer
+  participant M as useMemo (slice)
+
+  User->>UI: click page 5
+  UI->>Hook: goToPage(5)
+  Hook->>Hook: startTransition(() => ...)
+  Note over Hook: isPending = true
+  Hook->>R: dispatch(SET_PAGE, 5)
+  R-->>Hook: { page: 5, itemsPerPage }
+  Hook->>Hook: clamp(5, 1, totalPages)
+  Hook->>M: recompute slice
+  M-->>Hook: paginatedItems
+  Hook-->>UI: re-render (isPending = false)
+```
+
+---
+
 ## React primitives used
 
 | Primitive | Role in the hook |

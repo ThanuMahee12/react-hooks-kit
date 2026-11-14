@@ -2,6 +2,7 @@
 
 - [[Home]]
 - [[Installation]]
+- [[Architecture]]
 - [[Contributing]]
 
 **Hooks**

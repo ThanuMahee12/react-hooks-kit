@@ -66,6 +66,7 @@ function UserTable({ users }) {
 ## Getting started
 
 - **[[Installation]]** — add the kit to your project (submodule or copy).
+- **[[Architecture]]** — how the kit is consumed and how docs auto-publish (with diagrams).
 - **[[usePagination]]** — full API reference and recipes.
 - **[[Contributing]]** — conventions for adding a new hook.
 

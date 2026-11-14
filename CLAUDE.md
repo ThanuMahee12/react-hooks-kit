@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-`react-hooks-kit` is a small, **dependency-free collection of reusable React hooks** meant to be shared across projects — consumed as a git submodule or by copying individual files. The hooks depend on **React only** (no Redux, router, UI library, or data layer).
+`react-hooks-kit` is a small, **dependency-free collection of reusable custom React hooks** meant to be shared across projects — consumed as a git submodule or by copying individual files. The hooks depend on **React only** (no Redux, router, UI library, or data layer).
 
 It is currently consumed by the `AH-WELLNESS-HUB/ah-wellness-hub-website` app, mounted as a submodule at `src/shared/hooks`.
 

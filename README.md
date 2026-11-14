@@ -1,6 +1,6 @@
 # react-hooks-kit
 
-A small, **dependency-free** collection of reusable React hooks, designed to be shared across projects as a git submodule (or by copying individual files). React-only — no Redux, router, UI library, or data layer.
+A small, **dependency-free** collection of reusable custom React hooks, designed to be shared across projects as a git submodule (or by copying individual files). React-only — no Redux, router, UI library, or data layer.
 
 Built on modern React primitives (`useReducer`, `useMemo`, `useCallback`, `useId`, `useTransition`, `useDeferredValue`).
 

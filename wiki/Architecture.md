@@ -59,29 +59,6 @@ flowchart TD
 
 ---
 
-## Hook data pipeline (`usePagination`)
-
-Each hook is self-contained. `usePagination` turns an input array into the current page's slice; filtering and sorting happen **upstream**, in the consumer.
-
-```mermaid
-flowchart TD
-  items["items (filtered + sorted upstream)"] --> deferred{"options.deferred?"}
-  deferred -- "yes (default)" --> udv["useDeferredValue()"]
-  deferred -- "no" --> src
-  udv --> src["source list"]
-  src --> totals["totalItems / totalPages"]
-  state["reducer state\n{ page, itemsPerPage }"] --> clamp["clamp currentPage\nto [1, totalPages]"]
-  totals --> clamp
-  clamp --> memo["useMemo: slice page"]
-  src --> memo
-  memo --> out["paginatedItems"]
-  clamp --> window["useMemo: pageNumbers\n(windowed + ellipsis)"]
-```
-
-See the full API and more diagrams on the [[usePagination]] page.
-
----
-
 ## See also
 
 - [[usePagination]] — API reference, reducer state machine, sequence diagram

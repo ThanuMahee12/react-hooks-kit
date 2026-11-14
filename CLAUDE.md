@@ -47,7 +47,7 @@ The GitHub Wiki is **generated**, never hand-edited on github.com.
 
 **Rule: a hook change is not complete until its `wiki/<hook>.md` page is updated in the same change.**
 When you add, change, or remove a hook, you MUST also:
-1. Update or create `wiki/<hook>.md` (Signature → Parameters → Return value → Behavior notes → Recipe → Primitives used).
+1. Update or create `wiki/<hook>.md` (Signature → Parameters → Return value → Behavior notes → Recipe → Internal design → Primitives used). **Every hook page must include at least one Mermaid UML diagram** (state machine, sequence, or flow) in an "Internal design" section.
 2. Update the "Available hooks" table in `wiki/Home.md` and `CLAUDE.md`.
 3. Add/remove the entry in `wiki/_Sidebar.md`.
 

@@ -81,6 +81,31 @@ function Toolbar() {
 
 ---
 
+## Internal design
+
+### Resize → derive flow
+
+On mount the hook reads the current viewport and subscribes to `resize`. Each resize stores the new size in state; the breakpoint flags are **derived on render** from that width. Listeners are removed on unmount.
+
+```mermaid
+sequenceDiagram
+  participant W as window
+  participant H as useResponsive
+  participant C as Component
+
+  Note over H: mount → read innerWidth / innerHeight
+  H->>W: addEventListener('resize')
+
+  W->>H: resize event
+  H->>H: setWindowSize({ width, height })
+  H->>H: derive flags (isMobile, isMdUp, breakpoint, …)
+  H-->>C: re-render with new flags
+
+  Note over H,W: unmount → removeEventListener('resize')
+```
+
+---
+
 ## React primitives used
 
 | Primitive | Role in the hook |

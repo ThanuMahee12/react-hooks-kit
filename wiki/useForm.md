@@ -101,6 +101,32 @@ function UserForm({ existing, onSave }) {
 
 ---
 
+## Internal design
+
+### Submit pipeline
+
+`handleSubmit` always reads the **latest** values from a ref, validates (if a validator was supplied), then runs `onSubmit` — surfacing thrown errors under `errors.submit` and always clearing `isSubmitting`.
+
+```mermaid
+flowchart TD
+  submit["handleSubmit(e)"] --> prevent["e.preventDefault()"]
+  prevent --> read["read latest values (ref)"]
+  read --> hasValidate{"validate provided?"}
+  hasValidate -- no --> run["isSubmitting = true"]
+  hasValidate -- yes --> validate["validate(values)"]
+  validate --> errs{"errors found?"}
+  errs -- yes --> stop["setErrors()\nreturn false"]
+  errs -- no --> run
+  run --> call["await onSubmit(values)"]
+  call --> threw{"threw?"}
+  threw -- no --> ok["return true"]
+  threw -- yes --> fail["errors.submit = message\nreturn false"]
+  ok --> settle["isSubmitting = false"]
+  fail --> settle
+```
+
+---
+
 ## React primitives used
 
 | Primitive | Role in the hook |

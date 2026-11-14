@@ -76,6 +76,30 @@ function Users({ users }) {
 
 ---
 
+## Internal design
+
+### Lifecycle state machine
+
+`close()` doesn't clear the payload immediately — it waits ~150 ms so exit animations can still render the last content. `toggle()` flips visibility without touching the data.
+
+```mermaid
+stateDiagram-v2
+  [*] --> Closed
+
+  Closed --> Open : open(data) / toggle()
+  Open --> Open : setModalData / open(newData)
+  Open --> Closing : close()
+  Open --> Closed : toggle()
+  Closing --> Closed : after ~150ms (clear modalData)
+
+  note right of Closing
+    isOpen = false immediately;
+    modalData cleared on a timer
+  end note
+```
+
+---
+
 ## React primitives used
 
 | Primitive | Role in the hook |

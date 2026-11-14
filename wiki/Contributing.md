@@ -17,7 +17,7 @@ Guidelines for adding or changing hooks in `react-hooks-kit`.
 
 1. Create `useYourHook.js` at the repository root.
 2. Export a named hook: `export const useYourHook = (...) => { ... }`, plus a default export for convenience.
-3. Write a wiki page `wiki/useYourHook.md` following the [[usePagination]] layout: **Signature → Parameters → Return value → Behavior notes → Recipe → Primitives used**.
+3. Write a wiki page `wiki/useYourHook.md` following the [[usePagination]] layout: **Signature → Parameters → Return value → Behavior notes → Recipe → Internal design (at least one Mermaid UML diagram) → Primitives used**. Every hook page must include a UML diagram (state machine, sequence, or flow) in an "Internal design" section.
 4. Link it from `wiki/_Sidebar.md` and the "Available hooks" table on `wiki/Home.md`.
 5. Open a PR. On merge to `main`, the wiki publishes automatically (see below).
 
